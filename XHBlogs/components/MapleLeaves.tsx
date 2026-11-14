@@ -46,7 +46,7 @@ export default function MapleLeaves({ active = true }: { active?: boolean }) {
     const newLeaf = (initial: boolean): Leaf => ({
       x: rand(-40, w + 40),
       y: initial ? rand(-h * 0.2, h) : rand(-90, -20),
-      size: rand(7, 16),
+      size: rand(9, 20),
       vy: rand(16, 44),
       vx: rand(-14, 14),
       rot: rand(0, Math.PI * 2),
@@ -54,7 +54,7 @@ export default function MapleLeaves({ active = true }: { active?: boolean }) {
       sway: rand(10, 34),
       phase: rand(0, Math.PI * 2),
       color: LEAF_COLORS[(Math.random() * LEAF_COLORS.length) | 0],
-      alpha: rand(0.5, 0.9),
+      alpha: rand(0.62, 0.95),
     });
 
     const newDust = (initial: boolean): Dust => ({
@@ -154,8 +154,8 @@ export default function MapleLeaves({ active = true }: { active?: boolean }) {
       canvas.height = Math.floor(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const small = w < 768;
-      leaves = Array.from({ length: small ? 14 : 30 }, () => newLeaf(true));
-      dust = Array.from({ length: small ? 34 : 78 }, () => newDust(true));
+      leaves = Array.from({ length: small ? 20 : 38 }, () => newLeaf(true));
+      dust = Array.from({ length: small ? 42 : 92 }, () => newDust(true));
       sprite = makeSprite();
       if (reduce) draw();
     };
