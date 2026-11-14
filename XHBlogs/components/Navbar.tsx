@@ -70,19 +70,17 @@ export default function Navbar() {
 
   const navLinks = [
     { name: '首页', href: '/' },
-    { name: '项目', href: '/projects' },
-    { name: '归档', href: '/timeline' },
+    { name: '说说', href: '/moments' },
     { name: '照片墙', href: '/photowall' },
     { name: '音乐', href: '/music' },
-    { name: '灵境', href: '/tree' },
-    { name: '说说', href: '/moments' },
+    { name: '项目', href: '/projects' },
     { name: '杂谈', href: '/chatter' },
     { name: '友链', href: '/friends' },
     { name: '关于', href: '/about' },
   ];
 
-  // 🌟 核心：过滤掉“灵境”，专供手机端使用，保证圆盘自动重新均匀排布
-  const mobileNavLinks = navLinks.filter(link => link.href !== '/tree');
+  // 手机端与 PC 端共用同一套导航（灵境已下线，无需再单独过滤）
+  const mobileNavLinks = navLinks;
 
   return (
     <>

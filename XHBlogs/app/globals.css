@@ -6,7 +6,9 @@
 /* 2. 基础环境与性能优化 */
 @layer base {
   :root {
-    --font-serif: var(--font-serif), "Source Han Serif SC", "Noto Serif SC", "Songti SC", "SimSun", serif;
+    --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", Georgia, serif;
+    --font-geist-sans: "Geist", "Helvetica Neue", Arial, sans-serif;
+    --font-geist-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 
   body {
