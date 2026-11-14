@@ -74,7 +74,10 @@ export function shanghaiDate(d: Date = new Date()): string {
 export function parseAlbums(source: string): Album[] {
   const anchor = source.indexOf('export const albums');
   const from = anchor >= 0 ? anchor : 0;
-  const start = source.indexOf('[', from);
+  // 锚点后面紧跟的是类型标注 `: Album[]`，它的 `[]` 也是方括号，所以必须先越过 '='，
+  // 再从 '=' 之后找数组字面量的第一个 '['。
+  const eq = source.indexOf('=', from);
+  const start = source.indexOf('[', eq >= 0 ? eq : from);
   if (start < 0) return [];
 
   let depth = 0;
