@@ -54,7 +54,7 @@ export default function FriendsBoard() {
 
       {friendsData.length === 0 && (
         <p className="text-center text-slate-500 dark:text-slate-400 font-serif py-10">
-          还没有添加友链。去「数据后台 → 友链」加第一条吧。
+          还没有添加友链。在本地控制台 my-blog-manager 的「友链」里加第一条吧。
         </p>
       )}
 

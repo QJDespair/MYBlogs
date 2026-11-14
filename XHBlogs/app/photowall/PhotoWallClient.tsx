@@ -103,7 +103,7 @@ export default function PhotoWallClient() {
 
                                 {albums.length === 0 && (
                   <div className="text-center py-24 text-slate-500 dark:text-slate-400 font-medium">
-                    还没有上传任何照片。去「数据后台 → 照片墙」建一个相册，这里就会亮起来。
+                    还没有上传任何照片。在本地控制台 my-blog-manager 的「照片墙」里建一个相册，这里就会亮起来。
                   </div>
                 )}
 
