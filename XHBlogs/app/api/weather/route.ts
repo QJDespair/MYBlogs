@@ -92,6 +92,32 @@ function strategies(): Strategy[] {
   return out;
 }
 
+// 城市名：按 location 反查，进程内缓存 6 小时；查不到不影响天气本身
+const cityCache = new Map<string, { name: string; at: number }>();
+
+async function resolveCityName(location: string): Promise<string> {
+  const hit = cityCache.get(location);
+  if (hit && Date.now() - hit.at < 6 * 3600_000) return hit.name;
+  const apiHost = process.env.QWEATHER_API_HOST?.trim();
+  const apiKey = process.env.QWEATHER_API_KEY?.trim();
+  if (!apiHost || !apiKey) return '';
+  try {
+    const res = await fetch(
+      `https://${apiHost}/geo/v2/city/lookup?location=${encodeURIComponent(location)}&lang=zh`,
+      { headers: { 'X-QW-Api-Key': apiKey }, cache: 'no-store' }
+    );
+    const data: any = await res.json().catch(() => null);
+    const name = data?.location?.[0]?.name;
+    if (typeof name === 'string' && name) {
+      cityCache.set(location, { name, at: Date.now() });
+      return name;
+    }
+  } catch {
+    // 静默：城市名只是展示，天气数据已经拿到了
+  }
+  return '';
+}
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const location = (url.searchParams.get('location') || process.env.QWEATHER_LOCATION || '101010100').trim();
@@ -135,7 +161,8 @@ export async function GET(req: Request) {
       }
 
       if (data?.code === '200') {
-        return NextResponse.json(data, { headers: { 'Cache-Control': 'no-store' } });
+        const cityName = await resolveCityName(location);
+        return NextResponse.json({ ...data, cityName }, { headers: { 'Cache-Control': 'no-store' } });
       }
 
       const errTitle = data?.error?.title || data?.error?.detail || '';

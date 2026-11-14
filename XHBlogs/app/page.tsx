@@ -10,6 +10,7 @@ import SearchBar from '../components/SearchBar';
 import { siteConfig } from '../siteConfig';
 import CloudPlayer from '../components/CloudPlayer';
 import ThemeToggleBlock from '../components/ThemeToggleBlock';
+import WeatherWidget from '../components/WeatherWidget';
 import ProfileCard from '../components/ProfileCard';
 import SiteDashboard from '../components/SiteDashboard';
 import { albums } from '../data/albums';
@@ -200,7 +201,8 @@ export default function Home() {
                     <div className="sm:col-span-2 flex flex-col min-h-[200px]">
                       <LatestChatterCarousel chatters={top5Chatters} />
                     </div>
-                    <div className="sm:col-span-1 flex flex-col min-h-[120px]">
+                    <div className="sm:col-span-1 flex flex-col gap-6 min-h-[120px]">
+                      <WeatherWidget />
                       <ThemeToggleBlock />
                     </div>
                   </div>
