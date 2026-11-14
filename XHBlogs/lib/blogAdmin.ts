@@ -68,17 +68,44 @@ export function shanghaiDate(d: Date = new Date()): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai' }).format(d);
 }
 
-/** 把 data/albums.ts 里的数组解析出来（文件是 `export const albums: Album[] = [...];`） */
+/** 把 data/albums.ts 里的数组解析出来（文件是 `export const albums: Album[] = [...];`）
+ *  注意：interface 定义里也有 `Photo[]`，所以必须以 `export const albums` 为锚点找第一个 '['，
+ *  否则会从 interface 的 `[]` 开始解析、JSON.parse 抛错、静默返回空数组（曾导致"相册建了看不见、删不掉"）。 */
 export function parseAlbums(source: string): Album[] {
-  const i = source.indexOf('[');
-  const j = source.lastIndexOf(']');
-  if (i < 0 || j < i) return [];
-  try {
-    const arr = JSON.parse(source.slice(i, j + 1));
-    return Array.isArray(arr) ? (arr as Album[]) : [];
-  } catch {
-    return [];
+  const anchor = source.indexOf('export const albums');
+  const from = anchor >= 0 ? anchor : 0;
+  const start = source.indexOf('[', from);
+  if (start < 0) return [];
+
+  let depth = 0;
+  let inString = false;
+  let quote = '';
+  for (let i = start; i < source.length; i += 1) {
+    const ch = source[i];
+    if (inString) {
+      if (ch === '\\') i += 1;
+      else if (ch === quote) inString = false;
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      inString = true;
+      quote = ch;
+      continue;
+    }
+    if (ch === '[') depth += 1;
+    else if (ch === ']') {
+      depth -= 1;
+      if (depth === 0) {
+        try {
+          const arr = JSON.parse(source.slice(start, i + 1));
+          return Array.isArray(arr) ? (arr as Album[]) : [];
+        } catch {
+          return [];
+        }
+      }
+    }
   }
+  return [];
 }
 
 export function renderAlbums(albums: Album[]): string {
