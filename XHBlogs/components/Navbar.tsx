@@ -6,33 +6,6 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, PanInfo } from 'framer-motion';
 import { siteConfig } from '../siteConfig';
 
-/* [admin-link] /admin.php 由 nginx 交给 PHP，不在 Next 路由表里。
-   必须用原生 <a> 整页跳转，否则客户端路由会渲染出 404。 */
-function NavLink({
-  href,
-  className,
-  onClick,
-  children,
-}: {
-  href: string;
-  className?: string;
-  onClick?: () => void;
-  children: any;
-}) {
-  if (href.endsWith('.php')) {
-    return (
-      <a href={href} className={className} onClick={onClick}>
-        {children}
-      </a>
-    );
-  }
-  return (
-    <Link href={href} className={className} onClick={onClick}>
-      {children}
-    </Link>
-  );
-}
-
 export default function Navbar() {
   const [showNav, setShowNav] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -104,7 +77,6 @@ export default function Navbar() {
     { name: '杂谈', href: '/chatter' },
     { name: '友链', href: '/friends' },
     { name: '关于', href: '/about' },
-    { name: '后台', href: '/admin.php' },
   ];
 
   // 手机端与 PC 端共用同一套导航（灵境已下线，无需再单独过滤）
@@ -125,10 +97,10 @@ export default function Navbar() {
             {navLinks.map((link) => {
               const isActive = pathname === link.href || pathname === `${link.href}/`;
               return (
-                <NavLink key={link.href} href={link.href} className={`relative py-1 transition-colors ${isActive ? 'text-orange-600 dark:text-amber-400' : 'text-slate-700 dark:text-slate-200 hover:text-orange-600'}`}>
+                <Link key={link.href} href={link.href} className={`relative py-1 transition-colors ${isActive ? 'text-orange-600 dark:text-amber-400' : 'text-slate-700 dark:text-slate-200 hover:text-orange-600'}`}>
                   {link.name}
                   {isActive && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-orange-500 rounded-full animate-pulse"></span>}
-                </NavLink>
+                </Link>
               );
             })}
           </nav>
@@ -203,7 +175,7 @@ export default function Navbar() {
                         }}
                       >
                         <motion.div style={{ rotate: inverseRotation }} className="w-full h-full">
-                          <NavLink
+                          <Link
                             href={link.href}
                             onClick={() => setIsMobileMenuOpen(false)}
                             className={`flex items-center justify-center w-full h-full rounded-full transition-all duration-300 ${
@@ -213,7 +185,7 @@ export default function Navbar() {
                             }`}
                           >
                             <span className="text-[11px] font-black">{link.name}</span>
-                          </NavLink>
+                          </Link>
                         </motion.div>
                       </div>
                     );
