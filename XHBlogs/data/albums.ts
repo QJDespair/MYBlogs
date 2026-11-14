@@ -2,13 +2,4 @@
 export interface Photo { url: string; caption?: string; }
 export interface Album { id: string; title: string; description: string; cover: string; date: string; photos: Photo[]; }
 
-export const albums: Album[] = [
-  {
-    "id": "album-1794646975950",
-    "title": "往返测试",
-    "description": "tmp",
-    "cover": "/uploads/x.jpg",
-    "date": "2026-11-14",
-    "photos": []
-  }
-];
+export const albums: Album[] = [];
