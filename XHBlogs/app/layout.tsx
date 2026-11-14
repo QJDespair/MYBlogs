@@ -9,15 +9,12 @@ import { siteConfig } from "../siteConfig";
 import ClickEffect from "../components/ClickEffect";
 import BackgroundSlider from "../components/BackgroundSlider";
 import GlobalToolbox from "../components/GlobalToolbox";
-import SplashScreen from "../components/SplashScreen";
 import CyberCat from '../components/CyberCat';
 import BigFishPet from '../components/BigFishPet';
 import petSelection from '../data/petSelection.json';
 import DanmakuBackground from '../components/DanmakuBackground';
 
 import MobileBackButton from '../components/MobileBackButton';
-
-
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -32,33 +29,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="zh-CN" className="h-full antialiased" suppressHydrationWarning>
       <head>
-        <style
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `
-              #app-mount-root { opacity: 0; visibility: hidden; pointer-events: none; }
-              html.splash-seen #app-mount-root { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
-            `
-          }}
-        />
-        <script
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (sessionStorage.getItem('hasSeenSplash') === 'true') {
-                  document.documentElement.classList.add('splash-seen');
-                }
-              } catch (e) {}
-            `
-          }}
-        />
       </head>
 
       <body className="w-screen overflow-x-hidden min-h-full flex flex-col relative transition-colors duration-1000 bg-slate-50 dark:bg-slate-950 font-serif">
         <ThemeProvider>
-
-          <SplashScreen />
 
           <MusicProvider>
             <div id="app-mount-root" className="flex-1 flex flex-col transition-opacity duration-1000">
