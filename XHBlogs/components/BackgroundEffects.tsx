@@ -1,24 +1,17 @@
 "use client";
 import { useTheme } from './ThemeProvider';
-import Fireflies from './Fireflies';
-import Sakura from './Sakura';
-import WindyGrass from './WindyGrass';
+import MapleLeaves from './MapleLeaves';
+import TwinkleStars from './TwinkleStars';
 
+// 日间：枫叶飘落 + 金粉飘散；夜间：星点闪烁 + 偶发流星
+// 两个 canvas 始终挂载（避免 SSR/客户端结构不一致），只让当前主题那个跑动画。
 export default function BackgroundEffects() {
   const { isDark } = useTheme();
 
   return (
     <>
-      {/* 核心魔法：根据 isDark 切换特效组件 */}
-      <div className={`transition-opacity duration-1000 ${isDark ? 'opacity-100' : 'opacity-0'}`}>
-        <Fireflies />
-      </div>
-      <div className={`transition-opacity duration-1000 ${isDark ? 'opacity-0' : 'opacity-100'}`}>
-        <Sakura />
-      </div>
-
-      {/* 草地一直存在，但它内部会自动改变颜色 */}
-      <WindyGrass />
+      <MapleLeaves active={!isDark} />
+      <TwinkleStars active={isDark} />
     </>
   );
 }
