@@ -77,6 +77,7 @@ export default function Navbar() {
     { name: '杂谈', href: '/chatter' },
     { name: '友链', href: '/friends' },
     { name: '关于', href: '/about' },
+  { name: '后台', href: '/manage' }, /* manage-link */
   ];
 
   // 手机端与 PC 端共用同一套导航（灵境已下线，无需再单独过滤）
