@@ -5,7 +5,7 @@ export const siteConfig = {
   title: "QJAutumn の 宝藏之地",
   faviconUrl: "/avatar.jpg",
   authorName: "QJAutumn",
-  bio: "在代码、学术与分子动力学模拟间穿梭的普通人。近期正埋头于 GROMACS 模拟研究与神经网络计算。",
+  bio: "记录日常生活、代码，以及一些随手写下的想法。",
 
   navTitle: "QJAutumn",
 
@@ -22,17 +22,17 @@ export const siteConfig = {
   useGradient: true,
   themeColors: ["#c2410c", "#ea7317", "#f2a541", "#f7d08a"], // 呼吸流动的颜色组合（秋）
 // 修改这里：变成图片数组
-  bgImages: ["https://bu.dusays.com/2026/03/24/69c1e38b4c370.jpg", "https://bu.dusays.com/2026/03/24/69c26fe4acdb5.jpg", "https://bu.dusays.com/2026/03/24/69c26fe4d9486.jpg"],
+  bgImages: ["/bg/autumn-1.svg", "/bg/autumn-2.svg", "/bg/autumn-3.svg"],
 
   // 🌟 壁纸分组系统：前台轮播「激活分组」内的图片（保持 JSON 格式，便于后台解析）
-  bgGroups: [{"id": "default", "name": "默认", "images": ["https://bu.dusays.com/2026/03/24/69c1e38b4c370.jpg", "https://bu.dusays.com/2026/03/24/69c26fe4acdb5.jpg", "https://bu.dusays.com/2026/03/24/69c26fe4d9486.jpg"]}],
+  bgGroups: [{"id": "default", "name": "默认", "images": ["/bg/autumn-1.svg", "/bg/autumn-2.svg", "/bg/autumn-3.svg"]}],
   activeBgGroup: "default",
 
   // 4. 文章默认封面图 (当 Markdown 没写 cover 时显示)
-  defaultPostCover: "https://bu.dusays.com/2026/03/24/69c1e38b346cb.jpg",
+  defaultPostCover: "/bg/post-cover.svg",
 
   // 5. 首页照片墙预览图
-  photoWallImage: "https://bu.dusays.com/2026/03/24/69c1e38b4c370.jpg",
+  photoWallImage: "/bg/autumn-1.svg",
   cloudMusicIds: ["1809646618", "3361076230", "1859390262"],
   social: {
     github: "QJDespair",
@@ -43,14 +43,14 @@ export const siteConfig = {
     wechat: "QJDepressed",
   },
   counts: {
-    photos: 128, // 照片墙数量可以手动写死或动态计算
+    photos: 0, // 照片墙数量（可手动写死或动态计算）
   },
   chatterTitle: "云端杂谈", // 你可以改成任何你喜欢的名字
-  chatterDescription: "代码、学术、提瓦特与泰拉大陆的碎片记录",
+  chatterDescription: "随手记下的一些片段",
 
 
   // 👇 【新增】：全局背景弹幕配置
-  danmakuList: ["在干嘛呢？", "有笨蛋嘛？", "前方高能反应！", "GROMACS 跑起来了吗？", "MD 模拟什么时候才能出图啊", "Graph Neural Networks 炼丹中...", "BUG 修复进度 99%", "今天背单词了吗？", "Tailwind CSS 拯救前端", "写算法中", "睡大觉中", "到底在干嘛？"],
+  danmakuList: ["在干嘛呢？", "有笨蛋嘛？", "前方高能反应！", "今天也要加油鸭", "喝杯茶休息一下", "BUG 修复进度 99%", "今天背单词了吗？", "窗外天色不错", "随手写点什么", "写东西中", "睡大觉中", "到底在干嘛？"],
   gitalkConfig: {
     clientID: "",
     clientSecret: "",
