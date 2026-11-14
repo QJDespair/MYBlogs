@@ -4,6 +4,9 @@ import matter from 'gray-matter';
 import Navbar from '../../components/Navbar';
 import PageTransition from '../../components/PageTransition';
 import MomentList from './MomentList';
+import { cookies } from 'next/headers';
+import { TOKEN_COOKIE, verifyTokenValue } from '@/lib/blogAdmin';
+import MomentPublisher from '@/components/publish/MomentPublisher';
 import { siteConfig } from '../../siteConfig';
 
 export const metadata = {
@@ -11,7 +14,10 @@ export const metadata = {
   description: "生活动态与瞬间记录",
 };
 
-export default function MomentsPage() {
+export default async function MomentsPage() {
+  const cookieStore = await cookies();
+  const canPublish = verifyTokenValue(cookieStore.get(TOKEN_COOKIE)?.value);
+
   let allMoments: any[] = [];
 
   try {
@@ -55,6 +61,7 @@ export default function MomentsPage() {
           authorName={siteConfig.authorName}
           avatarUrl={siteConfig.avatarUrl}
         />
+        {canPublish && <MomentPublisher />}
       </PageTransition>
     </div>
   );

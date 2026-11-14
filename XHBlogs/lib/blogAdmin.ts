@@ -13,6 +13,9 @@ export const RUNTIME_DIR = path.join(REPO_ROOT, 'runtime');
 export const ALBUMS_PATH = path.join(SITE_ROOT, 'data', 'albums.ts');
 export const MOMENTS_DIR = path.join(SITE_ROOT, 'moments');
 
+/** 发布台登录 cookie（httpOnly，值是密钥本身；等价于 x-blog-token） */
+export const TOKEN_COOKIE = 'qj_blog_token';
+
 export type Photo = { url: string; caption?: string };
 export type Album = {
   id: string;
@@ -41,6 +44,32 @@ const MIME_EXT: Record<string, string> = {
   'image/heic': '.heic',
 };
 
+export function verifyTokenValue(value: string | null | undefined): boolean {
+  const expected = (process.env.BLOG_ADMIN_TOKEN || '').trim();
+  const got = (value || '').trim();
+  if (!expected || !got) return false;
+  const a = Buffer.from(got);
+  const b = Buffer.from(expected);
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
+function tokenFromCookie(header: string | null): string {
+  if (!header) return '';
+  for (const part of header.split(';')) {
+    const idx = part.indexOf('=');
+    if (idx < 0) continue;
+    if (part.slice(0, idx).trim() === TOKEN_COOKIE) {
+      const raw = part.slice(idx + 1).trim();
+      try {
+        return decodeURIComponent(raw);
+      } catch {
+        return raw;
+      }
+    }
+  }
+  return '';
+}
+
 /** 返回错误文案；null 表示通过 */
 export function requireToken(req: Request): string | null {
   const expected = (process.env.BLOG_ADMIN_TOKEN || '').trim();
@@ -48,7 +77,7 @@ export function requireToken(req: Request): string | null {
   const auth = req.headers.get('authorization') || '';
   const raw = auth.toLowerCase().startsWith('bearer ')
     ? auth.slice(7)
-    : req.headers.get('x-blog-token') || '';
+    : req.headers.get('x-blog-token') || tokenFromCookie(req.headers.get('cookie'));
   const got = raw.trim();
   if (!got) return '缺少令牌';
   const a = Buffer.from(got);
