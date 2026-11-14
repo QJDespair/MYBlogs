@@ -2,17 +2,18 @@
 
 export const siteConfig = {
   // 1. 网站标题与博主信息
-  title: "QJAutumn の 宝藏之地",
+  title: "秋之意",
+  seoDescription: "欢迎来到我的博客",
   faviconUrl: "/avatar.jpg",
   authorName: "QJAutumn",
   bio: "记录日常生活、代码，以及一些随手写下的想法。",
 
-  navTitle: "QJAutumn",
+  navTitle: "秋之意",
 
   // 👇 【新增】导航栏中间的那个后缀/分隔符（默认是 の）
-  navSuffix: "の",
+  navSuffix: "",
 
-  navAfter: "宝藏之地",
+  navAfter: "",
 
   // 2. 头像设置 (支持网络链接，或将图片放入 public 文件夹后使用 "/me.jpg")
   avatarUrl: "/avatar.jpg",

@@ -17,8 +17,18 @@ import DanmakuBackground from '../components/DanmakuBackground';
 import MobileBackButton from '../components/MobileBackButton';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://qjautumn.xyz'),
   title: siteConfig.title,
-  description: siteConfig.bio,
+  description: siteConfig.seoDescription || siteConfig.bio,
+  applicationName: siteConfig.title,
+  openGraph: {
+    title: siteConfig.title,
+    description: siteConfig.seoDescription || siteConfig.bio,
+    url: 'https://qjautumn.xyz',
+    siteName: siteConfig.title,
+    locale: 'zh_CN',
+    type: 'website',
+  },
   icons: {
     icon: siteConfig.faviconUrl,
     apple: siteConfig.faviconUrl,
