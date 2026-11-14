@@ -52,6 +52,12 @@ export default function FriendsBoard() {
         </div>
       </div>
 
+      {friendsData.length === 0 && (
+        <p className="text-center text-slate-500 dark:text-slate-400 font-serif py-10">
+          还没有添加友链。去「数据后台 → 友链」加第一条吧。
+        </p>
+      )}
+
       <motion.div
         variants={containerVariants}
         initial="hidden"
