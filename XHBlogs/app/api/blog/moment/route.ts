@@ -1,10 +1,13 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { NextResponse } from 'next/server';
-import { MOMENTS_DIR, requireToken, shanghaiDate } from '@/lib/blogAdmin';
+import { MOMENTS_DIR, requireToken, shanghaiDateTime } from '@/lib/blogAdmin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+
+/** 只认带时分的写法：2026-11-14T18:05 / 2026-11-14 18:05:30 / 带时区偏移的都算 */
+const WITH_TIME = /^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/;
 
 type Body = {
   content?: unknown;
@@ -30,10 +33,8 @@ export async function POST(req: Request) {
   const now = new Date();
   const ts = now.getTime();
   const id = `moment-${ts}`;
-  const date =
-    typeof body.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(body.date.trim())
-      ? body.date.trim()
-      : shanghaiDate(now);
+  const rawDate = typeof body.date === 'string' ? body.date.trim() : '';
+  const date = WITH_TIME.test(rawDate) ? rawDate : shanghaiDateTime(now);
 
   const images = Array.isArray(body.images)
     ? (body.images as unknown[])

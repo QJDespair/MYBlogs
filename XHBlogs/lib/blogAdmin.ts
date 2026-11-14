@@ -97,6 +97,20 @@ export function shanghaiDate(d: Date = new Date()): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai' }).format(d);
 }
 
+/** 完整时间戳：`2026-11-14T17:51:05+08:00`。
+ *  只写日期会让 `new Date('2026-11-14')` 按 UTC 零点解析，前台「几小时前」会整整早 8 小时。 */
+export function shanghaiDateTime(d: Date = new Date()): string {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false,
+  }).formatToParts(d);
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '00';
+  const hour = get('hour') === '24' ? '00' : get('hour');
+  return `${get('year')}-${get('month')}-${get('day')}T${hour}:${get('minute')}:${get('second')}+08:00`;
+}
+
 /** 把 data/albums.ts 里的数组解析出来（文件是 `export const albums: Album[] = [...];`）
  *  注意：interface 定义里也有 `Photo[]`，所以必须以 `export const albums` 为锚点找第一个 '['，
  *  否则会从 interface 的 `[]` 开始解析、JSON.parse 抛错、静默返回空数组（曾导致"相册建了看不见、删不掉"）。 */

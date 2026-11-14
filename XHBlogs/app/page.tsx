@@ -25,13 +25,16 @@ function formatUpdateTime(dateString: string) {
   try {
     const d = new Date(dateString);
     if (isNaN(d.getTime())) return dateString;
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const hours = String(d.getHours()).padStart(2, '0');
-    const mins = String(d.getMinutes()).padStart(2, '0');
-    if (hours === '00' && mins === '00') return `${year}.${month}.${day}`;
-    return `${year}.${month}.${day} ${hours}:${mins}`;
+    // 固定按东八区取值，不依赖服务器/浏览器的本地时区
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Shanghai',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false,
+    }).formatToParts(d);
+    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '00';
+    const hour = get('hour') === '24' ? '00' : get('hour');
+    if (hour === '00' && get('minute') === '00') return `${get('year')}.${get('month')}.${get('day')}`;
+    return `${get('year')}.${get('month')}.${get('day')} ${hour}:${get('minute')}`;
   } catch { return dateString; }
 }
 

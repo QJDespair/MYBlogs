@@ -5,11 +5,19 @@ import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { MapPin, MessageSquare, Clock, Sparkles, Search, ArrowDownAZ, ArrowUpZA, ChevronLeft, ChevronRight, Ghost } from 'lucide-react';
 import MomentComments from '../../components/MomentComments';
 
+function toDate(dateStr: string) {
+  if (!dateStr) return new Date(0);
+  // 只有日期时按东八区零点算：`new Date('2026-11-14')` 会被当成 UTC 零点，
+  // 北京时间下会把「17:51 发的说说」算成「10 小时前」。
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return new Date(`${dateStr}T00:00:00+08:00`);
+  return new Date(dateStr);
+}
+
 function timeAgo(dateStr: string) {
-  const date = new Date(dateStr);
+  const date = toDate(dateStr);
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-  if (diffInSeconds < 60) return '刚刚';
+  if (!Number.isFinite(diffInSeconds) || diffInSeconds < 60) return '刚刚';
   if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} 分钟前`;
   if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} 小时前`;
   return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
