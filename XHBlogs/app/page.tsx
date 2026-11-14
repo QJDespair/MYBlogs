@@ -38,6 +38,23 @@ function formatUpdateTime(dateString: string) {
   } catch { return dateString; }
 }
 
+function formatCnDateTime(dateString: string) {
+  if (!dateString || dateString === '1970-01-01') return '刚刚';
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return dateString;
+    // 同样固定东八区，服务器/浏览器时区都不影响
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Shanghai',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+    }).formatToParts(d);
+    const g = (t: string) => parts.find((p) => p.type === t)?.value ?? '00';
+    const hour = g('hour') === '24' ? '00' : g('hour');
+    return `${g('year')}年${Number(g('month'))}月${Number(g('day'))}日 ${hour}时${g('minute')}分${g('second')}秒`;
+  } catch { return dateString; }
+}
+
 export default function Home() {
   const postsDirectory = path.join(process.cwd(), 'posts');
   let allPosts: any[] = [];
@@ -106,7 +123,7 @@ export default function Home() {
           id: data.id || fileName.replace(/\.md$/, ''),
           ms: Number(fileName.replace(/^moment-/, '').replace(/\.md$/, '')) || 0,
           title: text.length > 40 ? `${head}…` : (head || '一条说说'),
-          description: rest || (data.location ? `${data.location} · ${formatUpdateTime(rawDate)}` : `发布于 ${formatUpdateTime(rawDate)}`),
+          description: rest || (data.location ? `${data.location} · ${formatCnDateTime(rawDate)}` : `发布于 ${formatCnDateTime(rawDate)}`),
           cover: images[0] || siteConfig.defaultPostCover,
           badge: '最新说说',
           href: '/moments',
