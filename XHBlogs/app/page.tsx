@@ -62,7 +62,7 @@ export default function Home() {
       });
     }
   } catch (e) {}
-  const top5Posts = allPosts.length > 0 ? allPosts.slice(0, 5) : [{ slug: 'none', title: '暂无文章', description: '快去写第一篇吧！', cover: siteConfig.defaultPostCover, date: '', formattedDate: '' }];
+  // 首页信息流：有文章时用文章；没有文章时用最新的「说说」（发布台发的说说会出现在这里）
 
   const chattersDirectory = path.join(process.cwd(), 'chatters');
   let allChatters: any[] = [];
@@ -84,6 +84,45 @@ export default function Home() {
     }
   } catch (e) {}
   const top5Chatters = allChatters.length > 0 ? allChatters.slice(0, 5) : [{ slug: 'none', title: '暂无记录', description: '记录一段思绪...', cover: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop', date: '', formattedDate: '' }];
+
+  const momentsDirectory = path.join(process.cwd(), 'moments');
+  let allMoments: any[] = [];
+  try {
+    if (fs.existsSync(momentsDirectory)) {
+      const momentFiles = fs.readdirSync(momentsDirectory).filter(f => f.endsWith('.md'));
+      allMoments = momentFiles.map(fileName => {
+        const fullPath = path.join(momentsDirectory, fileName);
+        const { data, content } = matter(fs.readFileSync(fullPath, 'utf8'));
+        const rawDate = data.date || '1970-01-01';
+        const text = (content || '').replace(/\s+/g, ' ').trim();
+        const images: string[] = Array.isArray(data.images) ? data.images : [];
+        const head = text.slice(0, 40);
+        const rest = text.slice(40).trim();
+        return {
+          slug: fileName.replace(/\.md$/, ''),
+          id: data.id || fileName.replace(/\.md$/, ''),
+          ms: Number(fileName.replace(/^moment-/, '').replace(/\.md$/, '')) || 0,
+          title: text.length > 40 ? `${head}…` : (head || '一条说说'),
+          description: rest || (data.location ? `${data.location} · ${rawDate}` : `发布于 ${rawDate}`),
+          cover: images[0] || siteConfig.defaultPostCover,
+          badge: '最新说说',
+          href: '/moments',
+          date: rawDate,
+          formattedDate: formatUpdateTime(rawDate)
+        };
+      }).sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+        if (dateB !== dateA) return dateB - dateA;
+        return b.ms - a.ms;
+      });
+    }
+  } catch (e) {}
+  const top5Posts = allPosts.length > 0
+    ? allPosts.slice(0, 5)
+    : (allMoments.length > 0
+      ? allMoments.slice(0, 5)
+      : [{ slug: 'none', title: '暂无内容', description: '去「说说」发第一条吧！', cover: siteConfig.defaultPostCover, date: '', formattedDate: '', href: '/moments', badge: '说说' }]);
 
   const chatterCount = allChatters.length;
   const realPhotoCount = albums.reduce((total, album) => total + album.photos.length, 0);
