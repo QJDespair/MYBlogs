@@ -29,7 +29,7 @@ const HexBadge = ({ badge, locked = false }: any) => {
     2: 'from-[#475569] to-[#94a3b8] border-[#334155] text-[#f1f5f9] shadow-[0_0_10px_#64748b66] bg-[length:200%_200%] animate-[hex-shine_6s_infinite_ease-in-out]',
     3: 'from-[#b45309] to-[#fbbf24] border-[#92400e] text-[#fef3c7] shadow-[0_0_12px_#fbbf2488] bg-[length:200%_200%] animate-[hex-shine_4s_infinite_ease-in-out]',
     4: 'from-[#047857] to-[#34d399] border-[#065f46] text-[#d1fae5] shadow-[0_0_15px_#34d399aa] bg-[length:200%_200%] animate-[hex-shine_3s_infinite_ease-in-out]',
-    5: 'from-[#6d28d9] to-[#a78bfa] border-[#5b21b6] text-[#ede9fe] shadow-[0_0_20px_#a78bfaaa] bg-[length:200%_200%] animate-[hex-shine_2.5s_infinite_ease-in-out]',
+    5: 'from-[#6d28d9] to-[#fbbf24] border-[#5b21b6] text-[#ede9fe] shadow-[0_0_20px_#a78bfaaa] bg-[length:200%_200%] animate-[hex-shine_2.5s_infinite_ease-in-out]',
     6: 'from-[#991b1b] to-[#f87171] border-[#7f1d1d] text-[#fee2e2] shadow-[0_0_25px_#f87171bb] bg-[length:200%_200%] animate-[hex-shine_2s_infinite_ease-in-out]',
     7: 'from-[#1e3a8a] to-[#60a5fa] border-[#1e40af] text-[#eff6ff] shadow-[0_0_30px_#60a5facc] bg-[length:200%_200%] animate-[hex-shine_1.5s_infinite_ease-in-out]',
     8: 'from-[#f1f5f9] to-[#e2e8f0] border-[#cbd5e1] text-[#0f172a] shadow-[0_0_35px_#ffffffdd] bg-[length:200%_200%] animate-[hex-shine_1s_infinite_ease-in-out]',

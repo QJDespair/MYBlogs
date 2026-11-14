@@ -45,7 +45,7 @@ export default function LabComments({ pageId }: { pageId?: string }) {
 
   return (
     <div className="w-full mt-16 relative">
-      <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-indigo-500/10 dark:bg-indigo-500/20 blur-3xl rounded-full pointer-events-none z-0"></div>
+      <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-orange-500/10 dark:bg-orange-500/20 blur-3xl rounded-full pointer-events-none z-0"></div>
       <div ref={containerRef} className="relative z-10 custom-gitalk-glass pt-6 border-t border-slate-200/50 dark:border-slate-700/50" />
 
       {/* 🌟 保留你原来的毛玻璃样式 */}
@@ -60,7 +60,7 @@ export default function LabComments({ pageId }: { pageId?: string }) {
         }
         .custom-gitalk-glass .gt-container .gt-header-textarea:focus {
           background: rgba(255, 255, 255, 0.2) !important;
-          border-color: #6366f1 !important;
+          border-color: #e2711d !important;
           box-shadow: 0 0 15px rgba(99, 102, 241, 0.3) !important;
         }
         .custom-gitalk-glass .gt-container .gt-header-preview {
@@ -69,7 +69,7 @@ export default function LabComments({ pageId }: { pageId?: string }) {
           border-radius: 16px !important;
         }
         .custom-gitalk-glass .gt-container .gt-btn {
-          background: #6366f1 !important;
+          background: #e2711d !important;
           border: none !important;
           border-radius: 12px !important;
           box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
@@ -97,7 +97,7 @@ export default function LabComments({ pageId }: { pageId?: string }) {
           color: inherit !important;
         }
         .custom-gitalk-glass .gt-container a {
-          color: #6366f1 !important;
+          color: #e2711d !important;
         }
       `}</style>
     </div>

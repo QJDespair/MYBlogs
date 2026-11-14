@@ -77,7 +77,7 @@ export default function MomentComments({ id }: MomentCommentsProps) {
         .moment-gitalk .gt-header-textarea:focus {
           min-height: 80px !important; /* 点击后展开 */
           background: rgba(255, 255, 255, 0.8) !important;
-          border-color: #6366f1 !important; /* 激活时变色 */
+          border-color: #e2711d !important; /* 激活时变色 */
         }
         .dark .moment-gitalk .gt-header-textarea {
           background: rgba(255, 255, 255, 0.05) !important;
@@ -91,7 +91,7 @@ export default function MomentComments({ id }: MomentCommentsProps) {
           padding: 0.3em 1rem !important;
           font-size: 12px !important;
           border-radius: 6px !important;
-          background: #6366f1 !important;
+          background: #e2711d !important;
           border: none !important;
         }
 

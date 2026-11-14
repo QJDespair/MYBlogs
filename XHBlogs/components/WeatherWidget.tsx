@@ -43,23 +43,23 @@ export default function WeatherWidget() {
     if (code === 100) return <Sun className="text-amber-400" size={38} />;
     if (code >= 101 && code <= 104) return <Cloud className="text-slate-300" size={38} />;
     if (code >= 300 && code <= 399) return <CloudRain className="text-blue-400" size={38} />;
-    if (code >= 400 && code <= 499) return <Snowflake className="text-indigo-200" size={38} />;
+    if (code >= 400 && code <= 499) return <Snowflake className="text-orange-200" size={38} />;
     if (code >= 150 && code <= 153) return <Sun className="text-orange-200" size={38} />; // 夜间晴/多云
     return <Cloud className="text-slate-400" size={38} />;
   };
 
   return (
     <div className="w-full h-full rounded-3xl bg-white/40 dark:bg-slate-800/50 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl p-6 flex flex-col justify-center transition-all duration-700 hover:scale-[1.02] group relative overflow-hidden">
-      <div className={`absolute -right-6 -top-6 w-32 h-32 blur-3xl rounded-full transition-colors duration-700 ${weather?.isMock ? 'bg-amber-500/20 group-hover:bg-amber-500/40' : 'bg-indigo-500/20 group-hover:bg-indigo-500/40'}`}></div>
+      <div className={`absolute -right-6 -top-6 w-32 h-32 blur-3xl rounded-full transition-colors duration-700 ${weather?.isMock ? 'bg-amber-500/20 group-hover:bg-amber-500/40' : 'bg-orange-500/20 group-hover:bg-orange-500/40'}`}></div>
       {loading ? (
          <div className="flex flex-col items-center gap-3 text-slate-500 w-full justify-center relative z-10">
-           <Loader2 className="animate-spin text-indigo-400" size={28} />
+           <Loader2 className="animate-spin text-amber-400" size={28} />
            <span className="text-[10px] font-black tracking-widest uppercase">同步 V7 气象云...</span>
          </div>
       ) : weather && (
         <div className="flex items-center justify-between relative z-10 w-full">
           <div className="flex flex-col flex-1 pr-2">
-            <span className={`text-[10px] font-black uppercase tracking-widest mb-1 ${weather.isMock ? 'text-amber-500' : 'text-indigo-500 dark:text-indigo-400'}`}>
+            <span className={`text-[10px] font-black uppercase tracking-widest mb-1 ${weather.isMock ? 'text-amber-500' : 'text-orange-500 dark:text-amber-400'}`}>
               {weather.isMock ? 'SIMULATED V7' : 'BEIJING V7'}
             </span>
             <span className="text-base font-bold text-slate-800 dark:text-white line-clamp-1">{weather.city}</span>

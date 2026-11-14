@@ -28,7 +28,7 @@
   .dark .prose {
     --tw-prose-body: var(--color-slate-200);
     --tw-prose-headings: var(--color-white);
-    --tw-prose-links: var(--color-indigo-400);
+    --tw-prose-links: var(--color-amber-400);
   }
 
   [class*="backdrop-blur-"] {
@@ -47,7 +47,7 @@ input[type=range]::-webkit-slider-thumb {
   appearance: none;
   width: 12px; height: 12px;
   border-radius: 50%;
-  background: #6366f1;
+  background: #e2711d;
   cursor: pointer;
 }
 

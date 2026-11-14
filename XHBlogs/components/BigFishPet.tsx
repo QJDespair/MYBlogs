@@ -19,16 +19,16 @@ const whispers = ['累了就歇一会儿吧。', '咕噜咕噜，记得喝水！
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 const panelStyle = 'absolute w-72 max-w-[calc(100vw-2rem)] rounded-2xl border border-slate-200 bg-white p-3 text-slate-800 shadow-xl dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100';
 const inputStyle = 'min-w-0 flex-1 rounded-lg border border-slate-300 bg-transparent px-2 py-1.5 text-sm dark:border-slate-600';
-const submitStyle = 'rounded-lg bg-indigo-600 px-3 text-sm font-bold text-white disabled:opacity-50';
+const submitStyle = 'rounded-lg bg-orange-600 px-3 text-sm font-bold text-white disabled:opacity-50';
 
 function PetAction({ kind, expanded, onClick }: { kind: 'chat' | 'todo'; expanded: boolean; onClick: () => void }) {
   const label = (expanded ? '关闭' : '') + (kind === 'chat' ? '聊天' : '待办');
   return (
     <button type="button" onClick={onClick} aria-label={label} aria-expanded={expanded}
       aria-controls={expanded ? 'big-fish-' + kind : undefined}
-      className={'group relative grid h-11 w-11 place-items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 '
-        + (expanded ? 'bg-indigo-500 text-white shadow-sm shadow-indigo-500/40'
-          : 'text-slate-600 hover:bg-indigo-100 hover:text-indigo-700 dark:text-slate-200 dark:hover:bg-indigo-400/20 dark:hover:text-white')}>
+      className={'group relative grid h-11 w-11 place-items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 '
+        + (expanded ? 'bg-orange-500 text-white shadow-sm shadow-orange-500/40'
+          : 'text-slate-600 hover:bg-orange-100 hover:text-orange-700 dark:text-slate-200 dark:hover:bg-amber-400/20 dark:hover:text-white')}>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
         aria-hidden="true" className="h-[19px] w-[19px]">
         {kind === 'chat' ? (
@@ -197,10 +197,10 @@ export default function BigFishPet({ preferences }: { preferences: Preferences }
               {todos.map(todo => (
                 <li key={todo.id} className="flex items-start gap-2 text-sm">
                   <label className="flex min-w-0 flex-1 items-start gap-2 break-all">
-                    <input type="checkbox" checked={todo.done} onChange={() => updateTodos(todos.map(item => item.id === todo.id ? { ...item, done: !item.done } : item))} className="mt-1 accent-indigo-600" />
+                    <input type="checkbox" checked={todo.done} onChange={() => updateTodos(todos.map(item => item.id === todo.id ? { ...item, done: !item.done } : item))} className="mt-1 accent-orange-600" />
                     <span className={todo.done ? 'line-through opacity-60' : ''}>{todo.text}</span>
                   </label>
-                  <button type="button" aria-label={'删除待办：' + todo.text} onClick={() => updateTodos(todos.filter(item => item.id !== todo.id))} className="shrink-0 text-xs text-indigo-600 dark:text-indigo-300">删除</button>
+                  <button type="button" aria-label={'删除待办：' + todo.text} onClick={() => updateTodos(todos.filter(item => item.id !== todo.id))} className="shrink-0 text-xs text-orange-600 dark:text-amber-300">删除</button>
                 </li>
               ))}
             </ul>
@@ -218,7 +218,7 @@ export default function BigFishPet({ preferences }: { preferences: Preferences }
           onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={finishDrag}
           onPointerCancel={finishDrag} onLostPointerCapture={finishDrag}
           onClick={event => { if (event.detail === 0 || !moved.current) setReaction(previous => previous + 1); }}
-          className="grid h-full w-full touch-none select-none place-items-center overflow-hidden rounded-2xl cursor-grab active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-indigo-500">
+          className="grid h-full w-full touch-none select-none place-items-center overflow-hidden rounded-2xl cursor-grab active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-orange-500">
           <BigFishAnimation reaction={reaction} enlarged={size !== 'regular'} />
         </button>
       </div>
