@@ -35,7 +35,7 @@ export const siteConfig = {
   photoWallImage: "/bg/autumn-1.svg",
   cloudMusicIds: ["1809646618", "3361076230", "1859390262"],
   social: {
-    github: "QJDespair",
+    github: "https://github.com/QJDespair",
     gitee: "",
     google: "",
     email: "2129069871@qq.com",

@@ -4,6 +4,9 @@
 import { siteConfig } from '../siteConfig'; // 确保路径正确
 
 // 这里我们整合了 SocialBtn 和 ClientSocials
+// 图标 tooltip 用中文，避免把内部 type 名露给访客
+const LABELS: Record<string, string> = { github: 'GitHub', gitee: 'Gitee', google: 'Google', email: '邮箱', qq: 'QQ', wechat: '微信' };
+
 function SocialBtn({ type, url, onClick }: { type: string, url?: string, onClick?: () => void }) {
   const getIcon = () => {
     switch (type) {
@@ -21,12 +24,16 @@ function SocialBtn({ type, url, onClick }: { type: string, url?: string, onClick
     <div
       onClick={onClick}
       className="w-8 h-8 rounded-lg bg-white/50 dark:bg-slate-700/50 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-600 dark:hover:text-white transition-all duration-300 border border-white/40 dark:border-white/10 shadow-sm cursor-pointer"
-      title={type}
+      title={LABELS[type] || type}
     >
       {getIcon()}
     </div>
   );
-  return url ? <a href={url} target="_blank" rel="noopener noreferrer">{content}</a> : content;
+  // github 在 config 里可能只写用户名，直接当 href 会变成站内相对链接
+  const resolved = url && !/^https?:\/\//i.test(url)
+    ? (type === 'github' ? `https://github.com/${url}` : url)
+    : url;
+  return resolved ? <a href={resolved} target="_blank" rel="noopener noreferrer">{content}</a> : content;
 }
 
 export default function ClientSocials() {
@@ -37,12 +44,10 @@ export default function ClientSocials() {
 
   return (
     <div className="flex gap-2 flex-wrap justify-center mt-4">
-      <SocialBtn type="github" url={siteConfig.social?.github} />
-      <SocialBtn type="gitee" url={siteConfig.social?.gitee} />
-      <SocialBtn type="google" url={siteConfig.social?.google} />
-      <SocialBtn type="email" onClick={() => copyToClipboard(siteConfig.social?.email || '', '邮箱')} />
       <SocialBtn type="qq" onClick={() => copyToClipboard(siteConfig.social?.qq || '', 'QQ号')} />
       <SocialBtn type="wechat" onClick={() => copyToClipboard(siteConfig.social?.wechat || '', '微信号')} />
+      <SocialBtn type="email" onClick={() => copyToClipboard(siteConfig.social?.email || '', '邮箱')} />
+      <SocialBtn type="github" url={siteConfig.social?.github} />
     </div>
   );
 }
