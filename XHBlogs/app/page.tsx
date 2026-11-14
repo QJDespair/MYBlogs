@@ -106,7 +106,7 @@ export default function Home() {
           id: data.id || fileName.replace(/\.md$/, ''),
           ms: Number(fileName.replace(/^moment-/, '').replace(/\.md$/, '')) || 0,
           title: text.length > 40 ? `${head}…` : (head || '一条说说'),
-          description: rest || (data.location ? `${data.location} · ${rawDate}` : `发布于 ${rawDate}`),
+          description: rest || (data.location ? `${data.location} · ${formatUpdateTime(rawDate)}` : `发布于 ${formatUpdateTime(rawDate)}`),
           cover: images[0] || siteConfig.defaultPostCover,
           badge: '最新说说',
           href: '/moments',
