@@ -3,9 +3,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import PageTransition from '../../components/PageTransition';
-import { albums, Album } from '../../data/albums';
+import type { Album } from '../../data/albums';
 
-export default function PhotoWallClient() {
+export default function PhotoWallClient({ albums }: { albums: Album[] }) {
   const [currentAlbum, setCurrentAlbum] = useState<Album | null>(null);
   const [selectedImage, setSelectedImage] = useState<{url: string, caption?: string} | null>(null);
 

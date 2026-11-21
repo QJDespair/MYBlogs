@@ -1,11 +1,9 @@
 import fs from 'node:fs/promises';
+import path from 'node:path';
 import { NextResponse } from 'next/server';
 import {
-  ALBUMS_PATH,
   type Album,
   type Photo,
-  parseAlbums,
-  renderAlbums,
   requireToken,
   shanghaiDate,
 } from '@/lib/blogAdmin';
@@ -13,13 +11,27 @@ import {
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// 相册落 data/albums.json（运行时读盘），不再改写 TS 常量 → 建相册无需重新构建
+const ALBUMS_JSON = path.join(process.cwd(), 'data', 'albums.json');
+
 async function readAlbums(): Promise<Album[]> {
-  const source = await fs.readFile(ALBUMS_PATH, 'utf8');
-  return parseAlbums(source);
+  try {
+    const parsed = JSON.parse(await fs.readFile(ALBUMS_JSON, 'utf8'));
+    const list = Array.isArray(parsed)
+      ? parsed
+      : Array.isArray((parsed as any)?.albums)
+        ? (parsed as any).albums
+        : [];
+    return list.filter((a: any) => a && typeof a.id === 'string') as Album[];
+  } catch {
+    return [];
+  }
 }
 
 async function saveAlbums(albums: Album[]): Promise<void> {
-  await fs.writeFile(ALBUMS_PATH, renderAlbums(albums), 'utf8');
+  const tmp = `${ALBUMS_JSON}.tmp`;
+  await fs.writeFile(tmp, `${JSON.stringify(albums, null, 2)}\n`, 'utf8');
+  await fs.rename(tmp, ALBUMS_JSON);
 }
 
 function toPhotos(input: unknown): Photo[] {

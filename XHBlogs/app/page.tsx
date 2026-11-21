@@ -13,7 +13,7 @@ import ThemeToggleBlock from '../components/ThemeToggleBlock';
 import WeatherWidget from '../components/WeatherWidget';
 import ProfileCard from '../components/ProfileCard';
 import SiteDashboard from '../components/SiteDashboard';
-import { albums } from '../data/albums';
+import { readAlbums } from '../data/albums';
 import LyricBar from '../components/LyricBar';
 import { ToastProvider } from '../components/ToastProvider';
 
@@ -56,7 +56,11 @@ function formatCnDateTime(dateString: string) {
   } catch { return dateString; }
 }
 
+// 首页每次请求现读磁盘（说说 / 相册 / 文章），发布后即时可见
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
+  const albums = readAlbums();
   const postsDirectory = path.join(process.cwd(), 'posts');
   let allPosts: any[] = [];
   try {
