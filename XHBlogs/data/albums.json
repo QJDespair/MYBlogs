@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "album-1795266908031",
+    "title": "自检相册",
+    "description": "instant test",
+    "cover": "/uploads/2026/11/5315f358b05e0968.jpg",
+    "date": "2026-11-21",
+    "photos": [
+      {
+        "url": "/uploads/2026/11/5315f358b05e0968.jpg",
+        "caption": "自检"
+      }
+    ]
+  }
+]
